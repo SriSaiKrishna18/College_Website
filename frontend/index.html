@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="SPARK Student Portal - Access your academic records, attendance, courses, and results">
+    <meta name="theme-color" content="#667eea">
+    <meta name="author" content="SPARK Team">
+    <meta property="og:title" content="SPARK - Student Portal">
+    <meta property="og:description" content="Your one-stop destination for academic excellence">
+    <meta property="og:type" content="website">
+    <title>SPARK - Student Portal</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="chatbot.css">
+    <link rel="stylesheet" href="css/notifications.css">
+    <link rel="stylesheet" href="css/quick-access.css">
+    <link rel="stylesheet" href="css/modal-styles.css">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- Toast Container for Notifications -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <div class="container">
+        <!-- Sidebar/Dashboard -->
+        <div class="sidebar">
+            <div class="logo">
+                <h2><span>SPARK</span></h2>
+            </div>
+            <nav class="dashboard">
+                <ul>
+                    <li class="dashboard-item active" data-page="home">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </li>
+                    <li class="dashboard-item" data-page="attendance">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Attendance</span>
+                    </li>
+                    <li class="dashboard-item" data-page="courses">
+                        <i class="fas fa-book"></i>
+                        <span>Courses</span>
+                    </li>
+                    <li class="dashboard-item" data-page="results">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Results</span>
+                    </li>
+                    <li class="dashboard-item" data-page="analysis">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Analysis</span>
+                    </li>
+                    <li class="dashboard-item" data-page="feedback">
+                        <i class="fas fa-comment-alt"></i>
+                        <span>Feedback</span>
+                    </li>
+                    <li class="dashboard-item" data-page="profile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search courses, topics, or pages...">
+                    <button type="button" aria-label="Search"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="profile">
+                    <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="notification-toggle" id="notification-toggle" aria-label="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge" id="notification-badge">3</span>
+                    </button>
+                    <div class="profile-dropdown">
+                        <img src="profile.jpg" alt="Profile Picture"
+                            onerror="this.src='https://ui-avatars.com/api/?name=Student&background=667eea&color=fff'">
+                        <div>
+                            <span class="profile-name">Student Name</span>
+                            <small class="profile-year">Department - Year</small>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Home Content -->
+            <section class="content" id="home">
+                <div class="welcome-section">
+                    <div class="welcome-text">
+                        <h1>Welcome back, Student!</h1>
+                        <p>Here's what's happening with your academic journey today.</p>
+                    </div>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-value cgpa-value">0.00</div>
+                        <div class="stat-label">Current CGPA</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value attendance-value">87%</div>
+                        <div class="stat-label">Attendance</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value courses-count">5</div>
+                        <div class="stat-label">Active Courses</div>
+                    </div>
+                </div>
+
+                <div class="quick-access">
+                    <h2>Quick Access</h2>
+                    <div class="cards">
+                        <div class="card quick-access-card" data-target="timetable">
+                            <i class="fas fa-calendar-alt"></i>
+                            <h3>Timetable</h3>
+                            <p>View your schedule</p>
+                        </div>
+                        <div class="card quick-access-card" data-target="exams">
+                            <i class="fas fa-file-alt"></i>
+                            <h3>Exams</h3>
+                            <p>Upcoming exams</p>
+                        </div>
+                        <div class="card quick-access-card" data-target="events">
+                            <i class="fas fa-calendar"></i>
+                            <h3>Events</h3>
+                            <p>Campus activities</p>
+                        </div>
+                        <div class="card quick-access-card" data-target="messages">
+                            <i class="fas fa-comments"></i>
+                            <h3>Messages</h3>
+                            <p>Announcements</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="thought-of-day">
+                    <h2><i class="fas fa-lightbulb"></i> Thought of the Day</h2>
+                    <blockquote>"Education is the passport to the future, for tomorrow belongs to those who prepare for
+                        it today."</blockquote>
+                </div>
+            </section>
+
+            <!-- Attendance Section -->
+            <section class="content hidden" id="attendance">
+                <h1>Attendance Overview</h1>
+                <div class="attendance-summary">
+                    <div class="summary-card">
+                        <h2>Overall Attendance</h2>
+                        <div class="progress-circle">
+                            <div class="progress-value">87%</div>
+                        </div>
+                    </div>
+                    <div class="attendance-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Course</th>
+                                    <th>Total Classes</th>
+                                    <th>Attended</th>
+                                    <th>Percentage</th>
+                                </tr>
+                            </thead>
+                            <tbody id="attendance-table-body">
+                                <!-- Attendance data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Courses Section -->
+            <section class="content hidden" id="courses">
+                <h1>Your Courses</h1>
+                <div class="courses-grid" id="courses-grid">
+                    <!-- Course cards will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="content hidden" id="results">
+                <h1>Academic Results</h1>
+                <div id="results-container">
+                    <!-- Results will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Analysis Section -->
+            <section class="content hidden" id="analysis">
+                <h1>Academic Performance Analysis</h1>
+
+                <div class="analysis-container">
+                    <div class="chart-container">
+                        <h2>SGPA Trend</h2>
+                        <canvas id="sgpaChart"></canvas>
+                    </div>
+                    <div class="semester-records">
+                        <h2>Semester Records</h2>
+                        <div id="semester-records-table"></div>
+                    </div>
+                </div>
+
+                <div class="performance-metrics">
+                    <h2>Performance Metrics</h2>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <h3>Average SGPA</h3>
+                            <div class="metric-value" id="avg-sgpa">0.00</div>
+                        </div>
+                        <div class="metric-card">
+                            <h3>Highest SGPA</h3>
+                            <div class="metric-value" id="highest-sgpa">0.00</div>
+                        </div>
+                        <div class="metric-card">
+                            <h3>Lowest SGPA</h3>
+                            <div class="metric-value" id="lowest-sgpa">0.00</div>
+                        </div>
+                        <div class="metric-card">
+                            <h3>SGPA Trend</h3>
+                            <div class="metric-value" id="sgpa-trend">Stable</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Feedback Section -->
+            <section class="content hidden" id="feedback">
+                <h1>Provide Feedback</h1>
+                <div class="feedback-container">
+                    <form id="feedback-form">
+                        <div class="form-group">
+                            <label for="feedback-subject">Subject</label>
+                            <input type="text" id="feedback-subject" name="subject" required
+                                placeholder="Enter feedback subject">
+                        </div>
+                        <div class="form-group">
+                            <label for="feedback-type">Feedback Type</label>
+                            <select id="feedback-type" name="type" required>
+                                <option value="">Select feedback type</option>
+                                <option value="suggestion">Suggestion</option>
+                                <option value="complaint">Complaint</option>
+                                <option value="appreciation">Appreciation</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="feedback-message">Your Feedback</label>
+                            <textarea id="feedback-message" name="message" rows="6" required
+                                placeholder="Please provide your detailed feedback here..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-paper-plane"></i> Submit Feedback
+                        </button>
+                    </form>
+                    <div class="feedback-info">
+                        <h3>Why Your Feedback Matters</h3>
+                        <p>Your feedback helps us improve our services and address any issues you might be facing. We
+                            appreciate your time and input.</p>
+                        <div class="feedback-guidelines">
+                            <h4>Guidelines for Effective Feedback:</h4>
+                            <ul>
+                                <li>Be specific and clear about your concerns or suggestions</li>
+                                <li>Provide relevant details and examples</li>
+                                <li>Suggest possible solutions if applicable</li>
+                                <li>Be respectful and constructive</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section class="content hidden" id="profile">
+                <h1>Student Profile</h1>
+                <div class="profile-details">
+                    <div class="profile-image-large">
+                        <img src="profile.jpg" alt="Profile"
+                            onerror="this.src='https://ui-avatars.com/api/?name=Student&background=667eea&color=fff&size=200'">
+                    </div>
+                    <div class="student-info">
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <td class="student-name">Student Name</td>
+                            </tr>
+                            <tr>
+                                <th>Roll Number</th>
+                                <td class="student-roll">R10000</td>
+                            </tr>
+                            <tr>
+                                <th>Department</th>
+                                <td class="student-department">Computer Science</td>
+                            </tr>
+                            <tr>
+                                <th>Current Semester</th>
+                                <td class="student-semester">4</td>
+                            </tr>
+                            <tr>
+                                <th>CGPA</th>
+                                <td class="student-cgpa">8.5</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td class="student-email">student@university.edu</td>
+                            </tr>
+                            <tr>
+                                <th>Phone</th>
+                                <td class="student-phone">9876543210</td>
+                            </tr>
+                        </table>
+                        <div class="profile-actions">
+                            <button id="edit-profile-btn" class="btn-primary">
+                                <i class="fas fa-edit"></i> Edit Profile
+                            </button>
+                            <button id="logout-btn" class="btn-danger">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="edit-profile-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Profile</h2>
+            <form id="edit-profile-form">
+                <div class="form-group">
+                    <label for="edit-email">Email</label>
+                    <input type="email" id="edit-email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="edit-phone">Phone</label>
+                    <input type="text" id="edit-phone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="edit-password">New Password</label>
+                    <input type="password" id="edit-password" name="password">
+                </div>
+                <div class="form-group">
+                    <label for="edit-confirm-password">Confirm Password</label>
+                    <input type="password" id="edit-confirm-password" name="confirm-password">
+                </div>
+                <button type="submit" class="btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Course Details Modal -->
+    <div id="course-details-modal" class="modal">
+        <div class="modal-content modal-lg">
+            <span class="close">&times;</span>
+            <div class="course-details-header">
+                <h2 id="course-modal-title">Course Title</h2>
+                <p id="course-modal-code">Course Code</p>
+            </div>
+            <div class="course-details-tabs">
+                <div class="tab-header">
+                    <div class="tab-btn active" data-tab="overview">Overview</div>
+                    <div class="tab-btn" data-tab="syllabus">Syllabus</div>
+                    <div class="tab-btn" data-tab="materials">Materials</div>
+                    <div class="tab-btn" data-tab="assignments">Assignments</div>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="overview">
+                        <div class="course-info-grid">
+                            <div class="info-item">
+                                <h4>Credits</h4>
+                                <p id="course-credits">3</p>
+                            </div>
+                            <div class="info-item">
+                                <h4>Department</h4>
+                                <p id="course-department">Computer Science</p>
+                            </div>
+                            <div class="info-item">
+                                <h4>Instructor</h4>
+                                <p id="course-instructor">Dr. John Doe</p>
+                            </div>
+                            <div class="info-item">
+                                <h4>Semester</h4>
+                                <p id="course-semester">Fall 2023</p>
+                            </div>
+                        </div>
+                        <div class="course-description">
+                            <h4>Description</h4>
+                            <p id="course-description-text">Course description will appear here.</p>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="syllabus">
+                        <div class="syllabus-content" id="syllabus-content"></div>
+                    </div>
+                    <div class="tab-pane" id="materials">
+                        <div class="materials-list" id="materials-list"></div>
+                    </div>
+                    <div class="tab-pane" id="assignments">
+                        <div class="assignments-list" id="course-assignments-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Access Modals -->
+    <div id="timetable-modal" class="modal">
+        <div class="modal-content modal-lg">
+            <span class="close">&times;</span>
+            <h2><i class="fas fa-calendar-alt"></i> Your Timetable</h2>
+            <div class="timetable-container">
+                <table class="timetable">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                        </tr>
+                    </thead>
+                    <tbody id="timetable-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="exams-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2><i class="fas fa-file-alt"></i> Upcoming Exams</h2>
+            <div class="exams-list" id="exams-list"></div>
+        </div>
+    </div>
+
+    <div id="events-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2><i class="fas fa-calendar"></i> Upcoming Events</h2>
+            <div class="events-list" id="events-list"></div>
+        </div>
+    </div>
+
+    <div id="messages-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2><i class="fas fa-comments"></i> Your Messages</h2>
+            <div class="messages-list" id="messages-list"></div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notification-container">
+        <div class="notification-header">
+            <h3>Notifications</h3>
+            <button class="close-notifications">&times;</button>
+        </div>
+        <div class="notification-list" id="notification-list"></div>
+    </div>
+
+    <!-- AI Chatbot -->
+    <button class="chatbot-toggle" id="chatbot-toggle" aria-label="Open AI Assistant">
+        <i class="fas fa-robot"></i>
+    </button>
+
+    <div class="chatbot-window" id="chatbot-window">
+        <div class="chatbot-header">
+            <div class="chatbot-header-info">
+                <div class="chatbot-avatar">🤖</div>
+                <div class="chatbot-status">
+                    <h3>SPARK AI</h3>
+                    <span><span class="online-indicator"></span> Online • Ready to help</span>
+                </div>
+            </div>
+            <button class="chatbot-close" id="chatbot-close" aria-label="Close chat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="quick-actions">
+            <button class="quick-action-btn" data-query="What's my attendance?">
+                <i class="fas fa-calendar-check"></i> Attendance
+            </button>
+            <button class="quick-action-btn" data-query="What are my grades?">
+                <i class="fas fa-graduation-cap"></i> Grades
+            </button>
+            <button class="quick-action-btn" data-query="When is my next exam?">
+                <i class="fas fa-clock"></i> Exams
+            </button>
+        </div>
+
+        <div class="chatbot-messages" id="chatbot-messages">
+            <div class="message bot">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        Hi! I'm SPARK AI, your personal academic assistant. I can help you with attendance, grades,
+                        course information, and more. What would you like to know?
+                    </div>
+                    <span class="message-time">Just now</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chatbot-input-container">
+            <div class="chatbot-input-wrapper">
+                <input type="text" id="chatbot-input" placeholder="Ask me anything about your academics...">
+                <button class="chatbot-send-btn" id="chatbot-send" aria-label="Send message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="chatbot-footer">
+            Powered by <a href="#">SPARK AI</a>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/modals.js"></script>
+    <script src="js/course-details.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/quick-access.js"></script>
+    <script src="chatbot.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
